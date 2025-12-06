@@ -166,10 +166,10 @@ body.chat_bg{
     overflow-x: hidden;
 }
 
- 
 
 
 
+/* EK Modified: 讓輸入框在最上層*/
 
 #chat_input{
 	position: fixed;
@@ -181,7 +181,7 @@ body.chat_bg{
 	width: 100%;
 	backdrop-filter: blur(10px);        
     -webkit-backdrop-filter: blur(10px);  
-    z-index: 9999;      /* 關鍵：疊在最上層 */
+    z-index: 9999;      /* 疊在最上層 */
 }
 
 #chat_input .input_box{ position: relative; width: 100%;  }

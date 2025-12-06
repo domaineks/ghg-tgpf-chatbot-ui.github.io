@@ -1,7 +1,4 @@
 ﻿
-//捲動到底按鈕
-console.log("chat.js loaded");
-
 document.addEventListener('DOMContentLoaded', () => {
   const btn = document.querySelector('#go_down');
 
@@ -90,11 +87,19 @@ $(function () {
 });
 
 
-// ======================= Chat 設定 =======================
+/* ============================================
+ * EK Add (2025/12/04)
+ * 說明：新增智能對話模組（Chat API）
+ * ============================================ */
 
+//======================= Chat 設定 =======================
 
 // 若之後有 staging / production，要改環境就改這一行。
-const API_BASE_URL = 'https://dominai-serve.domaineks.cc';
+const API_BASE_URL = 'https://chat.domaineks-ai.workers.dev';
+
+let isLoading = false;
+
+
 
 // 給這個頁面自己的 visitor id
 function getUserId() {
@@ -111,7 +116,7 @@ $(function () {
 
     const $form = $("#chat_input");
     const $input = $("#chat_keywords");
-    const $talkBox = $(".talk_box");
+    const $talkBox = $("#chatMessages");
 
     // 1) 頁面載入時先撈歷史訊息
     loadHistory($talkBox);
@@ -172,8 +177,17 @@ async function loadHistory($talkBox) {
 }
 
 
+
 // ======================= 發送訊息到 API =======================
 async function sendMessageToApi($talkBox, text) {
+
+    if (isLoading) {
+        console.warn("等待回覆中，請勿重複送出...");
+        return;
+    }
+
+    isLoading = true;
+    $("#chat_submit").prop("disabled", true); // 禁用按鈕
 
     showTypingIndicator($talkBox);
 
@@ -207,12 +221,20 @@ async function sendMessageToApi($talkBox, text) {
         } else {
             appendBotMessage($talkBox, '（系統沒有回傳可顯示的內容）');
         }
-    } catch (err) {
+    }
+    catch (err) {
         console.error('呼叫 API 發生錯誤：', err);
+
         removeTypingIndicator($talkBox);
+
         appendBotMessage($talkBox, '（發送訊息時發生錯誤）');
     }
+    finally {      
+        isLoading = false;
+        $("#chat_submit").prop("disabled", false);
+    }
 }
+
 
 
 // ======================= UI 呈現 =======================
@@ -224,13 +246,15 @@ function appendBotMessage($talkBox, text) {
     appendMessage($talkBox, text, false);
 }
 
+function escapeHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML.replace(/\n/g, "<br/>");
+}
+
 function appendMessage($talkBox, text, isUser) {
 
-    const safeText = text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/\n/g, "<br/>");
+    const safeText = escapeHtml(text);
 
     const timeStr = new Date().toLocaleTimeString('zh-TW', { hour12: false });
 
@@ -262,7 +286,7 @@ function showTypingIndicator($talkBox) {
         <dt class="bot typing" id="typing-indicator">
             <div class="talk">
                 <p>
-                    AI 正在思考中…
+                    智慧小芽思考中…
                     <span class="typing-indicator">
                         <span></span><span></span><span></span>
                     </span>
@@ -276,3 +300,4 @@ function showTypingIndicator($talkBox) {
 function removeTypingIndicator($talkBox) {
     $talkBox.find("#typing-indicator").remove();
 }
+/* ===== End EK Add ===== */
