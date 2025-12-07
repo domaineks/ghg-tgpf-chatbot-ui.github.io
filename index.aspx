@@ -25,12 +25,14 @@
 
 <!-- CSS Source-->
 <link rel="stylesheet" href="../Content/cssStyle/html5reset-1.6.1.css" />
- <link rel="stylesheet" href="../Content/cssStyle/chat.css" />	
+<link rel="stylesheet" href="../Content/cssStyle/chat.css" />	
+<!-- EK Add: 載入 reCAPTCHA -->
+<script src="https://www.google.com/recaptcha/api.js?render=6LesLiQsAAAAAIXYoxSUuSA0yAJAPbXf-cdev_Cl"></script>
 
 <!-- Jquery Source -->
 <script src="../scripts/vser/jquery.min.js"></script>
 
- <!-- EK Modified End-->
+<!-- EK Modified End-->
 </head>
 
 <body class="chat_bg">

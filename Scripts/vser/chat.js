@@ -94,8 +94,13 @@ $(function () {
 
 //======================= Chat 設定 =======================
 
+
+
+
 // 若之後有 staging / production，要改環境就改這一行。
 const API_BASE_URL = 'https://chat.domaineks-ai.workers.dev';
+// ⭐ 加入這行：記得換成你的 Site Key
+const RECAPTCHA_SITE_KEY = '6LesLiQsAAAAAIXYoxSUuSA0yAJAPbXf-cdev_Cl';
 
 let isLoading = false;
 
@@ -122,21 +127,31 @@ $(function () {
     loadHistory($talkBox);
 
     // 2) 攔截表單 submit（滑鼠點「送出」或輸入框按 Enter 都會觸發）
-    $form.on("submit", function (e) {
+    $form.on("submit", async function (e) {
         e.preventDefault();
 
         const text = $input.val().trim();
         if (!text) return;
 
-        // 顯示使用者訊息
-        appendUserMessage($talkBox, text);
+        // ✅ 先取得 reCAPTCHA token
+        try {
+            const recaptchaToken = await getRecaptchaToken();
 
-        // 清空輸入框
-        $input.val("");
+            // 顯示使用者訊息
+            appendUserMessage($talkBox, text);
 
-        // 呼叫後端 API
-        sendMessageToApi($talkBox, text);
+            // 清空輸入框
+            $input.val("");
+
+            // 呼叫後端 API，並帶上 token
+            sendMessageToApi($talkBox, text, recaptchaToken);
+
+        } catch (error) {
+            console.error("reCAPTCHA 驗證失敗:", error);
+            alert("驗證失敗，請重新整理頁面再試");
+        }
     });
+
 
     // 3) 額外保險：在輸入框按 Enter 也送出（某些瀏覽器不會觸發 form submit）
     $input.on("keypress", function (e) {
@@ -146,6 +161,23 @@ $(function () {
         }
     });
 });
+
+// ======================= reCAPTCHA 取得 Token =======================
+async function getRecaptchaToken() {
+    return new Promise((resolve, reject) => {
+        grecaptcha.ready(() => {
+            grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'chat_submit' })
+                .then(token => {
+                    console.log('✅ reCAPTCHA token 取得成功');
+                    resolve(token);
+                })
+                .catch(error => {
+                    console.error('❌ reCAPTCHA token 取得失敗:', error);
+                    reject(error);
+                });
+        });
+    });
+}
 
 
 // ======================= 載入歷史訊息 =======================
@@ -179,7 +211,7 @@ async function loadHistory($talkBox) {
 
 
 // ======================= 發送訊息到 API =======================
-async function sendMessageToApi($talkBox, text) {
+async function sendMessageToApi($talkBox, text, recaptchaToken) {
 
     if (isLoading) {
         console.warn("等待回覆中，請勿重複送出...");
@@ -201,7 +233,8 @@ async function sendMessageToApi($talkBox, text) {
             },
             body: JSON.stringify({
                 message: text,
-                userId: userId
+                userId: userId,
+                recaptchaToken: recaptchaToken
             })
         });
 
