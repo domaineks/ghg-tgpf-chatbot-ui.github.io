@@ -163,8 +163,7 @@ $(function () {
 });
 
 // ======================= reCAPTCHA 取得 Token =======================
-async function getRecaptchaToken() {
-    console.log("目前使用的 SITE KEY =", RECAPTCHA_SITE_KEY);
+async function getRecaptchaToken() {   
     return new Promise((resolve, reject) => {
         grecaptcha.enterprise.ready(() => {
             grecaptcha.enterprise.execute(RECAPTCHA_SITE_KEY, { action: 'LOGIN' })
