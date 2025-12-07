@@ -136,7 +136,7 @@ $(function () {
         // ✅ 先取得 reCAPTCHA token
         try {
             const recaptchaToken = await getRecaptchaToken();
-
+            console.log('0001');
             // 顯示使用者訊息
             appendUserMessage($talkBox, text);
 
@@ -144,7 +144,7 @@ $(function () {
             $input.val("");
 
             // 呼叫後端 API，並帶上 token
-            sendMessageToApi($talkBox, text, recaptchaToken);
+            sendMessageToApi($talkBox, text, recaptchaToken);            
 
         } catch (error) {
             console.error("reCAPTCHA 驗證失敗:", error);
@@ -164,10 +164,11 @@ $(function () {
 
 // ======================= reCAPTCHA 取得 Token =======================
 async function getRecaptchaToken() {
+    console.log("目前使用的 SITE KEY =", RECAPTCHA_SITE_KEY);
     return new Promise((resolve, reject) => {
-        grecaptcha.ready(() => {
-            grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'chat_submit' })
-                .then(token => {
+        grecaptcha.enterprise.ready(() => {
+            grecaptcha.enterprise.execute(RECAPTCHA_SITE_KEY, { action: 'LOGIN' })
+                .then(token => {                    
                     console.log('✅ reCAPTCHA token 取得成功');
                     resolve(token);
                 })
