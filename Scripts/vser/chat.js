@@ -122,7 +122,6 @@ $(function () {
         // 取得 reCAPTCHA token
         try {
             const recaptchaToken = await getRecaptchaToken();
-            console.log('0001');
             // 顯示使用者訊息
             appendUserMessage($talkBox, text);
 
@@ -152,7 +151,6 @@ async function getRecaptchaToken() {
         grecaptcha.enterprise.ready(() => {
             grecaptcha.enterprise.execute(RECAPTCHA_SITE_KEY, { action: 'LOGIN' })
                 .then(token => {                    
-                    console.log('✅ reCAPTCHA token 取得成功');
                     resolve(token);
                 })
                 .catch(error => {
