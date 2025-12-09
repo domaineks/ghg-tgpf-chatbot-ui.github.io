@@ -56,7 +56,7 @@
 		
 	</header>
 	<div class="pps_txt">
-		為保護您的權益，請詳細閱讀 「 <a href="javascript:();" id="agree" role="button" title="打開隱私權政策內容">隱私權政策</a>」 如您已充分瞭解並同意，請繼續進行對談服務。
+		為保護您的權益，請詳細閱讀 「 <a href="javascript:void(0);" id="agree" role="button" title="打開隱私權政策內容">隱私權政策</a>」 如您已充分瞭解並同意，請繼續進行對談服務。
 	</div>
 
   <!-- ============= 2025.12.09 Modified Start ============= -->
