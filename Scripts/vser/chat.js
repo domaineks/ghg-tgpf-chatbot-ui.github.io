@@ -35,12 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.setAttribute('aria-label', '捲動到視窗上方');
     }
   });
-});
-
-
- 
- 
-
+}); 
 
 $(function () {
   // 初始字體大小比例 (62.5% ≈ 10px 基準)
@@ -72,7 +67,6 @@ $(function () {
   });
 });
 
-
 //顯示隱私政策
  document.addEventListener('DOMContentLoaded', () => {
   const agrees = document.querySelector('#agrees');
@@ -87,26 +81,19 @@ $(function () {
 });
 
 
+// ------------------ 2025.12.09 Added Start ------------------
+
 /* ============================================
- * EK Add (2025/12/04)
- * 說明：新增智能對話模組（Chat API）
+ * 說明：新增智能對話模組（Chatbot API）
  * ============================================ */
 
-//======================= Chat 設定 =======================
+//======================= Chatbot 設定 =======================
 
-
-
-
-// 若之後有 staging / production，要改環境就改這一行。
 const API_BASE_URL = 'https://chat.domaineks-ai.workers.dev';
-// ⭐ 加入這行：記得換成你的 Site Key
 const RECAPTCHA_SITE_KEY = '6LesLiQsAAAAAIXYoxSUuSA0yAJAPbXf-cdev_Cl';
 
 let isLoading = false;
 
-
-
-// 給這個頁面自己的 visitor id
 function getUserId() {
     let userId = localStorage.getItem('dominai-visitor-id');
     if (!userId) {
@@ -118,7 +105,6 @@ function getUserId() {
 
 // ======================= DOM Ready =======================
 $(function () {
-
     const $form = $("#chat_input");
     const $input = $("#chat_keywords");
     const $talkBox = $("#chatMessages");
@@ -133,7 +119,7 @@ $(function () {
         const text = $input.val().trim();
         if (!text) return;
 
-        // ✅ 先取得 reCAPTCHA token
+        // 取得 reCAPTCHA token
         try {
             const recaptchaToken = await getRecaptchaToken();
             console.log('0001');
@@ -144,14 +130,12 @@ $(function () {
             $input.val("");
 
             // 呼叫後端 API，並帶上 token
-            sendMessageToApi($talkBox, text, recaptchaToken);            
-
+            sendMessageToApi($talkBox, text, recaptchaToken);
         } catch (error) {
             console.error("reCAPTCHA 驗證失敗:", error);
             alert("驗證失敗，請重新整理頁面再試");
         }
     });
-
 
     // 3) 額外保險：在輸入框按 Enter 也送出（某些瀏覽器不會觸發 form submit）
     $input.on("keypress", function (e) {
@@ -162,7 +146,7 @@ $(function () {
     });
 });
 
-// ======================= reCAPTCHA 取得 Token =======================
+// ======================= 取得 reCAPTCHA token =======================
 async function getRecaptchaToken() {   
     return new Promise((resolve, reject) => {
         grecaptcha.enterprise.ready(() => {
@@ -200,7 +184,6 @@ async function loadHistory($talkBox) {
         }
 
         data.messages.forEach(msg => {
-            // 依同仁格式，假設每筆有 text / isUser 這兩個欄位
             appendMessage($talkBox, msg.text, !!msg.isUser);
         });
     } catch (err) {
@@ -209,8 +192,7 @@ async function loadHistory($talkBox) {
 }
 
 
-
-// ======================= 發送訊息到 API =======================
+// ======================= 發送訊息到 Chatbot API =======================
 async function sendMessageToApi($talkBox, text, recaptchaToken) {
 
     if (isLoading) {
@@ -256,10 +238,8 @@ async function sendMessageToApi($talkBox, text, recaptchaToken) {
         }
     }
     catch (err) {
-        console.error('呼叫 API 發生錯誤：', err);
-
+        console.error('呼叫 Chatbot API 發生錯誤：', err);
         removeTypingIndicator($talkBox);
-
         appendBotMessage($talkBox, '（發送訊息時發生錯誤）');
     }
     finally {      
@@ -291,7 +271,6 @@ function appendMessage($talkBox, text, isUser) {
 
     const timeStr = new Date().toLocaleTimeString('zh-TW', { hour12: false });
 
-    // 你原本的 HTML：dt 是機器人、dd 是使用者，我們就沿用
     const tagName = isUser ? "dd" : "dt";
     const roleClass = isUser ? "user" : "bot";
 
@@ -319,7 +298,7 @@ function showTypingIndicator($talkBox) {
         <dt class="bot typing" id="typing-indicator">
             <div class="talk">
                 <p>
-                    智慧小芽思考中…
+                    智慧小芽思考中 ...
                     <span class="typing-indicator">
                         <span></span><span></span><span></span>
                     </span>
@@ -333,4 +312,5 @@ function showTypingIndicator($talkBox) {
 function removeTypingIndicator($talkBox) {
     $talkBox.find("#typing-indicator").remove();
 }
-/* ===== End EK Add ===== */
+
+// ------------------ 2025.12.09 Added End ------------------

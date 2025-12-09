@@ -21,18 +21,21 @@
   <script src="../scripts/respond.min.js"></script>
 <![endif]-->
 
-<!-- EK Modified: 修改CSS Source與Jquery Source引用位址-->
+<!-- ============= 2025.12.09 Modified Start ============= -->
 
-<!-- CSS Source-->
+<!-- CSS Source -->
+<!-- 修改 CSS Source 與 Jquery Source 引用位址 -->
 <link rel="stylesheet" href="../Content/cssStyle/html5reset-1.6.1.css" />
 <link rel="stylesheet" href="../Content/cssStyle/chat.css" />	
-<!-- EK Add: 載入 reCAPTCHA -->
+
+<!-- Load reCAPTCHA -->
 <script src="https://www.google.com/recaptcha/enterprise.js?render=6LesLiQsAAAAAIXYoxSUuSA0yAJAPbXf-cdev_Cl"></script>
 
 <!-- Jquery Source -->
 <script src="../scripts/vser/jquery.min.js"></script>
 
-<!-- EK Modified End-->
+<!-- ============= 2025.12.09 Modified End ============= -->
+
 </head>
 
 <body class="chat_bg">
@@ -55,10 +58,10 @@
 	<div class="pps_txt">
 		為保護您的權益，請詳細閱讀 「 <a href="javascript:();" id="agree" role="button" title="打開隱私權政策內容">隱私權政策</a>」 如您已充分瞭解並同意，請繼續進行對談服務。
 	</div>
-	
-	
-	
-	<!--對話框開始-->
+
+  <!-- ============= 2025.12.09 Modified Start ============= -->
+
+	<!-- 對話框開始 -->
 	<dl class="talk_box" id="C">
 		<dt>
  			<div class="talk">
@@ -66,15 +69,14 @@
 				<p>在開始之前，小芽先跟你說明一下：<br>小芽會盡力以最合理、最可靠的AI生成技術產出對話內容，但仍有可能出現些許不準確或疏漏的地方。如果你發現需要調整的部分，歡迎隨時告訴小芽，小芽會努力改進、提供更貼近你需求的資訊唷！</p>				
 			</div>			
 		</dt>
-<!-- EK Delete: 移除原本的多段寫死對話內容(包含時間戳記)，只保留小芽自我介紹 -->
 		<noscript>
 			<p style="text-align: center">您的瀏覽器不支援Javascript，請開啟瀏覽器的Javascript功能，才能正常操作本網頁功能!</p>
 			<style>#go_down, #textsize{ display: none;}</style>
 		</noscript>
 	</dl>
-	
-	 <!--對話框結束-->
-	
+	<!-- 對話框結束 -->
+
+  <!-- ============= 2025.12.09 Modified End ============= -->
 	
 	
 	<button id="go_down" aria-label="捲動到視窗下方">捲動到視窗下方</button>
@@ -88,13 +90,14 @@
 		</div>
 	
 	</form>
-	<!-- EK Add: 增加對話訊息的區塊 -->
-	<!-- 顯示對話訊息的區塊 -->
-	<dl class="talk_box" id="chatMessages">
-    
-	</dl>
-	<!-- EK Add End-->
- 
+
+  <!-- ============= 2025.12.09 Modified Start ============= -->
+
+	<!-- 增加與顯示對話訊息的區塊 -->
+	<dl class="talk_box" id="chatMessages"></dl>
+
+  <!-- ============= 2025.12.09 Modified End ============= -->
+
 </div>
 <!-- End wrapper -->
 	
@@ -129,7 +132,6 @@
 			 </div><!--/over_box-->
        </article>
  	</section><!--/pops-->
-	
 	
  <script src="../scripts/vser/chat.js"></script>	
 </body>
