@@ -13,7 +13,7 @@
   frame-src 'self' https://www.google.com;
   style-src 'self' 'unsafe-inline';
   img-src 'self' data: https://www.gstatic.com;
-  connect-src 'self' https://www.google.com;
+  connect-src 'self' https://www.google.com https://chat.domaineks-ai.workers.dev;
 ">
 
 <title>AI 智能對話 - 經濟部產業發展署產業節能減碳資訊網</title>
