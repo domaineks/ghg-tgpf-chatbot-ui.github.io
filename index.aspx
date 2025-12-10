@@ -5,6 +5,10 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+
+<!-- Content Security Policy 設定 -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline'; frame-src https://www.google.com; connect-src 'self' https://www.google.com;">
+
 <title>AI 智能對話 - 經濟部產業發展署產業節能減碳資訊網</title>
 <meta name="keywords" content="節能減碳,產業節能減碳,氣候變遷," />
 <meta name="description" content="節能減碳已成為國際間最受關注的課題，為協助廠商降低能資源耗用與溫室氣體排放，提升我國產業生產效率與競爭力，提供「節能減碳技術輔導與諮詢」、「抵換專案示範輔導」以及「節能減碳人才訓練」等服務，協助廠商診斷節能減碳潛力，落實節能減碳改善，或依循環保署溫室氣體抵換專案推動原則與程序，取得減量額度，獲得生產成本降低以及碳資產之雙重效益。" />
